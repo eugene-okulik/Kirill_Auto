@@ -1,16 +1,18 @@
 str_1 = 'результат операции: 42'
 str_2 = 'результат операции: 514'
-str_3 = 'результат работы программы: 9'
+str_3 = 'результат операции: 9'
 
 
-list_1 = str_1.split(': ')
-list_2 = str_2.split(': ')
-list_3 = str_3.split(': ')
+colon_index_1 = str_1.index(':')
+colon_index_2 = str_2.index(':')
+colon_index_3 = str_3.index(':')
 
-result_1 = int(list_1[1]) + 10
-result_2 = int(list_2[1]) + 10
-result_3 = int(list_3[1]) + 10
+number_1 = int(str_1[colon_index_1 + 2:]) + 10
+number_2 = int(str_2[colon_index_2 + 2:]) + 10
+number_3 = int(str_3[colon_index_3 + 2:]) + 10
 
-print(result_1)
-print(result_2)
-print(result_3)
+#print(number_1)
+#print(number_2)
+#print(number_3)
+
+print(f"Результат сложения: {number_1} {number_2} {number_3}")
