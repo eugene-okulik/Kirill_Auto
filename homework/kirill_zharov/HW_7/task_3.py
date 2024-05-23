@@ -1,4 +1,6 @@
 def some_func(results):
+
+
     for text in results:
         number = int(text.split()[-1]) + 10
         print(number)
