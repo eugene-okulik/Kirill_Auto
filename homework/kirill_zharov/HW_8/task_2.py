@@ -1,6 +1,6 @@
 import sys
 
-
+# Увеличение лимита на количество символов в строковом представлении целых чисел
 sys.set_int_max_str_digits(100000)
 
 def fibonacci_generator():
