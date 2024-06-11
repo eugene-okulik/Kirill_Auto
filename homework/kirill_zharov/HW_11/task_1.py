@@ -56,4 +56,3 @@ textbooks[2].reserve()
 
 for textbook in textbooks:
     print(textbook)
-
