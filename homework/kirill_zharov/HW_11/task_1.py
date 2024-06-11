@@ -14,7 +14,8 @@ class Book:
 
     def __str__(self):
         reservation_status = "зарезервирована" if self.reserved else "не зарезервирована"
-        return f"Название: {self.title}, Автор: {self.author}, страниц: {self.pages}, материал: {Book.material}, {reservation_status}"
+        return (f"Название: {self.title}, Автор: {self.author}, страниц: {self.pages}, "
+                f"материал: {Book.material}, {reservation_status}")
 
 
 book1 = Book("Идиот", "Достоевский", 400, "123456712")
@@ -39,7 +40,8 @@ class Textbook(Book):
 
     def __str__(self):
         reserved_status = 'зарезервирована' if self.reserved else 'не зарезервирована'
-        return f"Название: {self.title}, Автор: {self.author}, страниц: {self.pages}, предмет: {self.subject}, класс: {self.school_class}, {reserved_status}".strip()
+        return (f"Название: {self.title}, Автор: {self.author}, страниц: {self.pages}, "
+                f"предмет: {self.subject}, класс: {self.school_class}, {reserved_status}".strip())
 
 
 textbooks = [
@@ -54,3 +56,4 @@ textbooks[2].reserve()
 
 for textbook in textbooks:
     print(textbook)
+
