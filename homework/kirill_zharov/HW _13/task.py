@@ -1,17 +1,14 @@
-import requests
+import os
 from datetime import datetime, timedelta
 
-# URL к файлу на GitHub (raw URL)
-url = 'https://raw.githubusercontent.com/eugene-okulik/Kirill_Auto/main/homework/eugene_okulik/hw_13/data.txt'
+# Путь к файлу конфигурации
+config_path = os.path.join("/Users/kirillzharov/Kirill_Auto/homework/eugene_okulik/hw_13/data.txt")
 
-# Выполняем GET-запрос к URL
-response = requests.get(url)
+# Открываем файл конфигурации и читаем его содержимое
+with open(config_path, 'r') as config_file:
+    config_data = config_file.read()
 
-# Получаем содержимое файла
-content = response.text
-
-# Печатаем содержимое файла
-print(content)
+print(config_data)
 
 # Задача 1: Прибавить одну неделю к дате 2023-11-27 20:34:13.212967
 orig_date = datetime.strptime('2023-11-27 20:34:13.212967', '%Y-%m-%d %H:%M:%S.%f')
