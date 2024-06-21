@@ -1,14 +1,17 @@
 import os
 from datetime import datetime, timedelta
 
-# Путь к файлу конфигурации
-config_path = os.path.join("/Users/kirillzharov/Kirill_Auto/homework/eugene_okulik/hw_13/data.txt")
-
+# Получаем базовый путь к директории, в которой находится текущий файл скрипта
+base_path = os.path.dirname(__file__)
+homework_path = os.path.dirname(os.path.dirname(base_path))
+print(homework_path)
+# Построение пути к файлу конфигурации относительно текущего файла
+config_path = os.path.join(homework_path, "eugene_okulik", "hw_13", "data.txt")
+print(config_path)
 # Открываем файл конфигурации и читаем его содержимое
 with open(config_path, 'r') as config_file:
     config_data = config_file.read()
-
-print(config_data)
+    print(config_data)
 
 # Задача 1: Прибавить одну неделю к дате 2023-11-27 20:34:13.212967
 orig_date = datetime.strptime('2023-11-27 20:34:13.212967', '%Y-%m-%d %H:%M:%S.%f')
