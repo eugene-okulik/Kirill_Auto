@@ -1,0 +1,77 @@
+INSERT INTO students (name, second_name, group_id)
+VALUES ('Kirill', 'Zharoff', 1390);
+
+
+
+INSERT INTO `groups` (title, start_date, end_date)
+VALUES ('Groupa_Beta_1', '01.01.2000', '01.01.2022')
+
+
+
+INSERT INTO books (title, taken_by_student_id)
+VALUES
+('Python book', 1390),
+('SQL book', 1390);
+
+
+
+INSERT INTO subjets (title)
+VALUES
+('Python cours'),
+('SQL cours');
+
+
+
+INSERT INTO lessons (title, subject_id)
+VALUES
+('Lesson 10', 1841),
+('Lesson 20', 1842);
+
+
+
+INSERT INTO marks (value, lesson_id, student_id)
+VALUES
+(10, 4206, 1390),
+(10, 4207, 1390);
+
+
+
+SELECT m.value, l.title AS lesson_title
+FROM marks m
+JOIN lessons l ON m.lesson_id = l.id
+WHERE m.student_id = 1390;
+
+
+SELECT b.title
+FROM books b
+WHERE b.taken_by_student_id = 1390;
+
+
+
+
+SELECT
+    students.id,
+    students.name,
+    students.second_name,
+    `groups`.title AS group_title,
+    `groups`.start_date,
+    `groups`.end_date,
+    GROUP_CONCAT(DISTINCT books.title) AS books,
+    GROUP_CONCAT(DISTINCT subjets.title) AS subjects,
+    GROUP_CONCAT(DISTINCT lessons.title) AS lessons,
+    GROUP_CONCAT(DISTINCT marks.value) AS marks
+FROM
+    students
+LEFT JOIN `groups` ON students.group_id = `groups`.id
+LEFT JOIN books ON students.id = books.taken_by_student_id
+LEFT JOIN marks ON students.id = marks.student_id
+LEFT JOIN lessons ON marks.lesson_id = lessons.id
+LEFT JOIN subjets ON lessons.subject_id = subjets.id
+WHERE
+    students.id = 1390
+GROUP BY
+    students.id, students.name, students.second_name, `groups`.title, `groups`.start_date, `groups`.end_date;
+
+
+
+
