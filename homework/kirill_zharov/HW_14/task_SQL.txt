@@ -1,5 +1,5 @@
-INSERT INTO students (name, second_name, group_id)
-VALUES ('Kirill', 'Zharoff', 1390);
+INSERT INTO students (name, second_name)
+VALUES ('Kirill', 'Zharoff');
 
 
 
