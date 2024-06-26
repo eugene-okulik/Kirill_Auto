@@ -14,6 +14,17 @@ INSERT INTO `groups` (title, start_date, end_date)
 VALUES ('Groupa_Beta_1', '01.01.2000', '01.01.2022')
 
 
+SELECT * FROM `groups` g 
+
+UPDATE students
+SET group_id = 1390
+WHERE id = 1390;
+
+
+SELECT students.name, students.second_name, groups.title
+FROM students
+JOIN `groups` ON students.group_id = groups.id
+WHERE students.id = 1390;
 
 
 
@@ -21,6 +32,13 @@ INSERT INTO subjets (title)
 VALUES
 ('Python cours'),
 ('SQL cours');
+
+
+SELECT students.name, students.second_name, groups.title
+FROM students
+JOIN `groups` ON students.group_id = groups.id
+WHERE students.id = 1390;
+
 
 
 
@@ -76,8 +94,6 @@ WHERE
     students.id = 1390
 GROUP BY
     students.id, students.name, students.second_name, `groups`.title, `groups`.start_date, `groups`.end_date;
-
-
 
 
 
