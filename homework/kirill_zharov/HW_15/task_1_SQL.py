@@ -18,12 +18,18 @@ cursor.execute(sql_students, ('Kirill', 'Zharoff'))
 student_id = cursor.lastrowid  # Получаем id добавленной записи
 
 # Запрос INSERT для books
-sql_books = "INSERT INTO books (title, taken_by_student_id) VALUES (%s, %s), (%s, %s)"
+sql_books = (
+    "INSERT INTO books (title, taken_by_student_id) "
+    "VALUES (%s, %s), (%s, %s)"
+)
 val_books = ('Python book', student_id, 'SQL book', student_id)
 cursor.execute(sql_books, val_books)
 
 # Запрос INSERT для groups
-sql_groups = "INSERT INTO `groups` (title, start_date, end_date) VALUES (%s, %s, %s)"
+sql_groups = (
+    "INSERT INTO `groups` (title, start_date, end_date) "
+    "VALUES (%s, %s, %s)"
+)
 cursor.execute(sql_groups, ('Groupa_Beta_1', '2000-01-01', '2022-01-01'))
 group_id = cursor.lastrowid  # Получаем id добавленной записи
 
@@ -43,21 +49,34 @@ student_info = cursor.fetchone()
 print(f"Студент {student_info[0]} {student_info[1]} находится в группе '{student_info[2]}'")
 
 # Запрос INSERT для subjects
-sql_subjects = "INSERT INTO subjets (title) VALUES (%s), (%s)"
+sql_subjects = (
+    "INSERT INTO subjets (title) "
+    "VALUES (%s), (%s)"
+)
 cursor.execute(sql_subjects, ('Python cours', 'SQL cours'))
 subject_ids = cursor.lastrowid  # Получаем id добавленных записей
 
 # Запрос INSERT для lessons
-sql_lessons = "INSERT INTO lessons (title, subject_id) VALUES (%s, %s), (%s, %s)"
+sql_lessons = (
+    "INSERT INTO lessons (title, subject_id) "
+    "VALUES (%s, %s), (%s, %s)"
+)
 cursor.execute(sql_lessons, ('Lesson 10', subject_ids, 'Lesson 20', subject_ids + 1))
 lesson_ids = cursor.lastrowid  # Получаем id добавленных записей
 
 # Запрос INSERT для marks
-sql_marks = "INSERT INTO marks (value, lesson_id, student_id) VALUES (%s, %s, %s), (%s, %s, %s)"
+sql_marks = (
+    "INSERT INTO marks (value, lesson_id, student_id) "
+    "VALUES (%s, %s, %s), (%s, %s, %s)"
+)
 cursor.execute(sql_marks, (10, lesson_ids, student_id, 'good', lesson_ids + 1, student_id))
 
 # Запросы SELECT для вывода информации
-sql_select_marks = "SELECT m.value, l.title AS lesson_title FROM marks m JOIN lessons l ON m.lesson_id = l.id WHERE m.student_id = %s"
+sql_select_marks = (
+    "SELECT m.value, l.title AS lesson_title "
+    "FROM marks m JOIN lessons l ON m.lesson_id = l.id "
+    "WHERE m.student_id = %s"
+)
 cursor.execute(sql_select_marks, (student_id,))
 marks_info = cursor.fetchall()
 print("Оценки студента:")
@@ -98,7 +117,18 @@ GROUP BY
 cursor.execute(sql_select_student_details, (student_id,))
 student_details = cursor.fetchone()
 print(
-    f"\nИнформация о студенте:\nID: {student_details[0]}\nИмя: {student_details[1]}\nФамилия: {student_details[2]}\nГруппа: {student_details[3]}\nДата начала группы: {student_details[4]}\nДата окончания группы: {student_details[5]}\nКниги: {student_details[6]}\nПредметы: {student_details[7]}\nУроки: {student_details[8]}\nОценки: {student_details[9]}")
+    f"\nИнформация о студенте:\n"
+    f"ID: {student_details[0]}\n"
+    f"Имя: {student_details[1]}\n"
+    f"Фамилия: {student_details[2]}\n"
+    f"Группа: {student_details[3]}\n"
+    f"Дата начала группы: {student_details[4]}\n"
+    f"Дата окончания группы: {student_details[5]}\n"
+    f"Книги: {student_details[6]}\n"
+    f"Предметы: {student_details[7]}\n"
+    f"Уроки: {student_details[8]}\n"
+    f"Оценки: {student_details[9]}"
+)
 
 # Подтверждение изменений в базе данных
 db.commit()
