@@ -42,7 +42,7 @@ cursor.execute("""
     JOIN subjets sub ON l.subject_id = sub.id
 """)
 data = cursor.fetchall()
-# print(data)
+
 db_data_tuples = [(
     row['name'],
     row['second_name'],
