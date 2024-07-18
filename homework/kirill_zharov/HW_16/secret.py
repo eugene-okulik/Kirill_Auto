@@ -32,7 +32,7 @@ csv_data_tuples = [tuple(row) for row in csv_data]
 # Создание объекта для выполнения SQL-запросов
 cursor = db.cursor(dictionary=True)
 cursor.execute("""
-    SELECT s.name, s.second_name, g.title AS group_title, b.title AS book_title, 
+    SELECT s.name, s.second_name, g.title AS group_title, b.title AS book_title,
            sub.title AS subject_title, l.title AS lesson_title, m.value AS mark_value
     FROM students s
     JOIN `groups` g ON s.group_id = g.id
