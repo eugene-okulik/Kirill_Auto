@@ -32,21 +32,36 @@ csv_data_tuples = [tuple(row) for row in csv_data]
 # Создание объекта для выполнения SQL-запросов
 cursor = db.cursor(dictionary=True)
 cursor.execute("""
-SELECT *
-FROM students;
+    SELECT s.name, s.second_name, g.title AS group_title, b.title AS book_title, 
+           sub.title AS subject_title, l.title AS lesson_title, m.value AS mark_value
+    FROM students s
+    JOIN `groups` g ON s.group_id = g.id
+    JOIN books b ON b.taken_by_student_id = s.id
+    JOIN marks m ON m.student_id = s.id
+    JOIN lessons l ON m.lesson_id = l.id
+    JOIN subjets sub ON l.subject_id = sub.id
 """)
 data = cursor.fetchall()
-db_data_tuples = [tuple(row.values()) for row in data]
+# print(data)
+db_data_tuples = [(
+    row['name'],
+    row['second_name'],
+    row['group_title'],
+    row['book_title'],
+    row['subject_title'],
+    row['lesson_title'],
+    row['mark_value']
+) for row in data]
 
 # Поиск отсутствующих данных
 missing_data = [row for row in csv_data_tuples if row not in db_data_tuples]
 
 if missing_data:
-    print("Этих данных не хватает в базе:")
+    print("Этих данных нет в базе:")
     for row in missing_data:
         print(row)
 else:
-    print("Все данные из файла присутствуют в базе.")
+    print("Все данные из файла есть в базе.")
 
 # Закрытие соединения с базой данных
 cursor.close()
