@@ -16,9 +16,21 @@ def teardown_test():
     print("after test")
 
 
-def new_obj(payload):
+@pytest.fixture
+def new_obj():
+    payload = {
+        "name": "Apple MacBook Pro 16",
+        "data": {
+            "year": 2019,
+            "price": 1849.99,
+            "CPU model": "Intel Core i9",
+            "Hard disk size": "1 TB"
+        }
+    }
     response = requests.post("https://api.restful-api.dev/objects", json=payload).json()
-    return response['id']
+    obj_id = response['id']
+    yield obj_id
+    requests.delete(f"https://api.restful-api.dev/objects/{obj_id}")
 
 
 @pytest.mark.parametrize("payload", [
@@ -56,33 +68,15 @@ def test_post_obj(payload):
 
 
 @pytest.mark.critical
-def test_get_obj_by_id():
-    payload = {
-        "name": "Apple MacBook Pro 16",
-        "data": {
-            "year": 2019,
-            "price": 1849.99,
-            "CPU model": "Intel Core i9",
-            "Hard disk size": "1 TB"
-        }
-    }
-    obj_id = new_obj(payload)
+def test_get_obj_by_id(new_obj):
+    obj_id = new_obj
     response = requests.get(f"https://api.restful-api.dev/objects/{obj_id}").json()
     assert response['id'] == obj_id
 
 
 @pytest.mark.medium
-def test_put_obj():
-    payload = {
-        "name": "Apple MacBook Pro 16",
-        "data": {
-            "year": 2019,
-            "price": 1849.99,
-            "CPU model": "Intel Core i9",
-            "Hard disk size": "1 TB"
-        }
-    }
-    obj_id = new_obj(payload)
+def test_put_obj(new_obj):
+    obj_id = new_obj
     updated_payload = {
         "name": "Apple MacBook Pro 20",
         "data": {
@@ -94,39 +88,19 @@ def test_put_obj():
     }
     response = requests.put(f"https://api.restful-api.dev/objects/{obj_id}", json=updated_payload).json()
     assert response['name'] == updated_payload['name']
-    requests.delete(f"https://api.restful-api.dev/objects/{obj_id}")
 
 
-def test_patch_obj():
-    payload = {
-        "name": "Apple MacBook Pro 16",
-        "data": {
-            "year": 2019,
-            "price": 1849.99,
-            "CPU model": "Intel Core i9",
-            "Hard disk size": "1 TB"
-        }
-    }
-    obj_id = new_obj(payload)
+def test_patch_obj(new_obj):
+    obj_id = new_obj
     patch_payload = {
         "name": "Apple MacBook Pro 25 (Updated Name)"
     }
     response = requests.patch(f"https://api.restful-api.dev/objects/{obj_id}", json=patch_payload).json()
     assert response['name'] == patch_payload['name']
-    requests.delete(f"https://api.restful-api.dev/objects/{obj_id}")
 
 
-def test_delete_obj():
-    payload = {
-        "name": "Apple MacBook Pro 16",
-        "data": {
-            "year": 2019,
-            "price": 1849.99,
-            "CPU model": "Intel Core i9",
-            "Hard disk size": "1 TB"
-        }
-    }
-    obj_id = new_obj(payload)
+def test_delete_obj(new_obj):
+    obj_id = new_obj
     response = requests.delete(f"https://api.restful-api.dev/objects/{obj_id}")
     assert response.status_code == 200
     response = requests.delete(f"https://api.restful-api.dev/objects/{obj_id}")
