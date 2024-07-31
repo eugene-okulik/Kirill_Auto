@@ -2,12 +2,13 @@ import pytest
 import requests
 import allure
 
-# Фикстура для инициализации и завершения сессии тестов
+
 @pytest.fixture(scope="session", autouse=True)
 def teardown_session():
     print("Start testing")
     yield
     print("Testing completed")
+
 
 # Фикстура для инициализации и завершения каждого теста
 @pytest.fixture(autouse=True)
@@ -15,6 +16,7 @@ def teardown_test():
     print("before test")
     yield
     print("after test")
+
 
 # Фикстура для создания нового объекта перед тестом и удаления его после теста
 @pytest.fixture
@@ -32,6 +34,7 @@ def new_obj():
     obj_id = response['id']
     yield obj_id
     requests.delete(f"https://api.restful-api.dev/objects/{obj_id}")
+
 
 # Тесты для различных API операций
 @allure.feature("API Testing")
@@ -72,6 +75,7 @@ def test_post_obj(payload):
     with allure.step("Verify response"):
         assert response['name'] == payload['name']
 
+
 @allure.feature("API Testing")
 @allure.story("Retrieve objects")
 @allure.title("Test GET request by ID")
@@ -82,6 +86,7 @@ def test_get_obj_by_id(new_obj):
         response = requests.get(f"https://api.restful-api.dev/objects/{obj_id}").json()
     with allure.step("Verify response"):
         assert response['id'] == obj_id
+
 
 @allure.feature("API Testing")
 @allure.story("Update objects")
@@ -103,6 +108,7 @@ def test_put_obj(new_obj):
     with allure.step("Verify response"):
         assert response['name'] == updated_payload['name']
 
+
 @allure.feature("API Testing")
 @allure.story("Partial update objects")
 @allure.title("Test PATCH request")
@@ -115,6 +121,7 @@ def test_patch_obj(new_obj):
         response = requests.patch(f"https://api.restful-api.dev/objects/{obj_id}", json=patch_payload).json()
     with allure.step("Verify response"):
         assert response['name'] == patch_payload['name']
+
 
 @allure.feature("API Testing")
 @allure.story("Delete objects")
