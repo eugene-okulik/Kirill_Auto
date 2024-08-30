@@ -10,7 +10,7 @@ import requests
 
 @pytest.fixture
 def new_obj():
-    # Создаем объект
+    # Создаем объект.
     payload = {
         "name": "Apple MacBook Pro 16",
         "data": {
