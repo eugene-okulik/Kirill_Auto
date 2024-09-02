@@ -11,5 +11,5 @@ class PatchObject(Endpoint):
         self.response_json = self.response.json()
 
     @allure.step("Verify response")
-    def check_response_title_is_correct(self, patch_payload):
-        assert self.response_json['name'] == patch_payload['name']
+    def check_response_title_is_correct(self, title):
+        assert self.response_json['name'] == title['name']
